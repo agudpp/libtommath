@@ -9,9 +9,9 @@ endif
 
 include makefile_include.mk 
 
-FLAGS		+= # -std=gnu99 -Iinclude
-CFLAGS	   += -fPIC -g #-pedantic -Wall -Wextra -ggdb3
-LDFLAGS	  += -shared
+FLAGS	+= # -std=gnu99 -Iinclude
+CFLAGS  += -fPIC -g #-pedantic -Wall -Wextra -ggdb3
+LDFLAGS += -shared
 
 #START_INS
 OBJECTS=mp_2expt.o mp_abs.o mp_add.o mp_add_d.o mp_addmod.o mp_and.o mp_clamp.o mp_clear.o mp_clear_multi.o \
@@ -47,7 +47,7 @@ objs: $(OBJECTS)
 	$(CC) $(LTM_CFLAGS) $(CFLAGS) $(LTM_LDFLAGS) -o $@ -c $<
 
 $(LIBNAME):  $(OBJECTS)
-	$(CC) $(FLAGS) $(CFLAGS) $(LDFLAGS) $(DEBUGFLAGS) -o $(LIBNAME) $(OBJECTS)
+	$(CC) $(FLAGS) $(CFLAGS) $(LDFLAGS) $(DEBUGFLAGS) -Wl,-soname,$(LIBNAME) -o $(LIBNAME) $(OBJECTS)
 
 install: $(LIBNAME)
 	install -d $(DESTDIR)$(LIBPATH)
