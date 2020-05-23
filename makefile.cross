@@ -9,9 +9,9 @@ endif
 
 include makefile_include.mk 
 
-FLAGS        += # -std=gnu99 -Iinclude
-CFLAGS       += -fPIC -g #-pedantic -Wall -Wextra -ggdb3
-LDFLAGS      += -shared
+FLAGS		+= # -std=gnu99 -Iinclude
+CFLAGS	   += -fPIC -g #-pedantic -Wall -Wextra -ggdb3
+LDFLAGS	  += -shared
 
 #START_INS
 OBJECTS=mp_2expt.o mp_abs.o mp_add.o mp_add_d.o mp_addmod.o mp_and.o mp_clamp.o mp_clear.o mp_clear_multi.o \
@@ -44,22 +44,22 @@ s_mp_sub.o s_mp_zero_buf.o s_mp_zero_digs.o
 objs: $(OBJECTS)
 
 .c.o: $(HEADERS)
-    $(CC) $(LTM_CFLAGS) $(CFLAGS) $(LTM_LDFLAGS) -o $@ -c $<
+	$(CC) $(LTM_CFLAGS) $(CFLAGS) $(LTM_LDFLAGS) -o $@ -c $<
 
 $(LIBNAME):  $(OBJECTS)
-    $(CC) $(FLAGS) $(CFLAGS) $(LDFLAGS) $(DEBUGFLAGS) -o $(LIBNAME) $(OBJECTS)
+	$(CC) $(FLAGS) $(CFLAGS) $(LDFLAGS) $(DEBUGFLAGS) -o $(LIBNAME) $(OBJECTS)
 
 install: $(LIBNAME)
-    install -d $(DESTDIR)$(LIBPATH)
-    install -d $(DESTDIR)$(INCPATH)
-    install -m 644 $(LIBNAME) $(DESTDIR)$(LIBPATH)/$(LIBNAME)
-    install -m 644 $(HEADERS_PUB) $(DESTDIR)$(INCPATH)
-    sed -e 's,^prefix=.*,prefix=$(PREFIX),' -e 's,^Version:.*,Version: $(VERSION_PC),' libtommath.pc.in > libtommath.pc
-    install -d $(DESTDIR)$(LIBPATH)/pkgconfig
-    install -m 644 libtommath.pc $(DESTDIR)$(LIBPATH)/pkgconfig/
+	install -d $(DESTDIR)$(LIBPATH)
+	install -d $(DESTDIR)$(INCPATH)
+	install -m 644 $(LIBNAME) $(DESTDIR)$(LIBPATH)/$(LIBNAME)
+	install -m 644 $(HEADERS_PUB) $(DESTDIR)$(INCPATH)
+	sed -e 's,^prefix=.*,prefix=$(PREFIX),' -e 's,^Version:.*,Version: $(VERSION_PC),' libtommath.pc.in > libtommath.pc
+	install -d $(DESTDIR)$(LIBPATH)/pkgconfig
+	install -m 644 libtommath.pc $(DESTDIR)$(LIBPATH)/pkgconfig/
 
 uninstall:
-    rm $(DESTDIR)$(LIBPATH)/$(LIBNAME)
-    rm $(HEADERS_PUB:%=$(DESTDIR)$(INCPATH)/%)
-    rm $(DESTDIR)$(LIBPATH)/pkgconfig/libtommath.pc
+	rm $(DESTDIR)$(LIBPATH)/$(LIBNAME)
+	rm $(HEADERS_PUB:%=$(DESTDIR)$(INCPATH)/%)
+	rm $(DESTDIR)$(LIBPATH)/pkgconfig/libtommath.pc
 
